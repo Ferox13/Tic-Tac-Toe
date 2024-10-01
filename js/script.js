@@ -68,19 +68,9 @@ function disableAllButtons() {
     button.disabled = true;
   });
 }
-const resetGame = () => {};
-
-function isBoardFull(board) {
-  for (let row of board) {
-    for (let cell of row) {
-      if (cell != "o" || cell != "x") {
-        return false;
-      }
-    }
-  }
-  return true;
-}
+let cont = 0;
 const CheckWin = () => {
+  cont++;
   //  rows
   for (let i = 0; i < 3; i++) {
     if (board[i][0] === "x" && board[i][1] === "x" && board[i][2] === "x") {
@@ -166,11 +156,13 @@ const CheckWin = () => {
       disableAllButtons();
       resetBtn.removeAttribute("hidden");
     }
-    if(!endGame && isBoardFull(board)){
-      turnText.innerText = `El ganador es O`;
-      disableAllButtons();
-      resetBtn.removeAttribute("hidden");
-      turnText.innerText = `Empate`;
-    }
+  }
+
+  if (cont === 9 && endGame===true) {
+    turnText.innerText = `Empate`;
+    endGame = true;
+    disableAllButtons();
+    resetBtn.removeAttribute("hidden");
+    cont = 0;
   }
 };
